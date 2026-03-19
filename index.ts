@@ -4,6 +4,14 @@ import { createCourse } from "./src/domain/entities/courseEntity";
 
 import { v4 as uuidv4 } from "uuid";
 
+function logError(testName: string, error: unknown) {
+  if (error instanceof Error) {
+    console.log(`${testName} failed: ${error.message}`);
+  } else {
+    console.log(`${testName} failed: Unknown error`);
+  }
+}
+
 const id = uuidv4();
 console.log("running the application ... ", id);
 
@@ -16,7 +24,7 @@ try {
     4,
   );
 } catch (error) {
-  console.log(error);
+  logError("student0", error);
 }
 
 try {
@@ -27,7 +35,7 @@ try {
     1,
   );
 } catch (error) {
-  console.log(error);
+  logError("student1", error);
 }
 
 try {
@@ -38,7 +46,7 @@ try {
     1,
   );
 } catch (error) {
-  console.log(error);
+  logError("student2", error);
 }
 
 try {
@@ -49,32 +57,32 @@ try {
     500,
   );
 } catch (error) {
-  console.log(error);
+  logError("student3", error);
 }
 
 // Course Tests
 try {
   const course0 = createCourse("CS101", "Intro to Computer Science", 5, 150);
 } catch (error) {
-  console.log(error);
+  logError("course0", error);
 }
 
 try {
-  const course0 = createCourse("Z9", "Intro to Computer Science", 5, 150);
+  const course1 = createCourse("Z9", "Intro to Computer Science", 5, 150);
 } catch (error) {
-  console.log(error);
+  logError("course1", error);
 }
 
 try {
-  const course0 = createCourse("CS101", "Intro to Computer Science", 20, 150);
+  const course2 = createCourse("CS101", "Intro to Computer Science", 20, 150);
 } catch (error) {
-  console.log(error);
+  logError("course2", error);
 }
 
 try {
-  const course0 = createCourse("CS101", "Intro to Computer Science", 5, 500);
+  const course3 = createCourse("CS101", "Intro to Computer Science", 5, 500);
 } catch (error) {
-  console.log(error);
+  logError("course3", error);
 }
 
 // Enrollment Tests
@@ -86,7 +94,7 @@ try {
     "Fall 2026",
   );
 } catch (error) {
-  console.log(error);
+  logError("enrollment0", error);
 }
 
 try {
@@ -97,7 +105,7 @@ try {
     "Fall 2026",
   );
 } catch (error) {
-  console.log(error);
+  logError("enrollment1", error);
 }
 
 try {
@@ -108,7 +116,7 @@ try {
     "Fall 2026",
   );
 } catch (error) {
-  console.log(error);
+  logError("enrollment2", error);
 }
 
 try {
@@ -119,7 +127,7 @@ try {
     "Fall 2026",
   );
 } catch (error) {
-  console.log(error);
+  logError("enrollment3", error);
 }
 
 try {
@@ -130,5 +138,5 @@ try {
     "Splinter 6",
   );
 } catch (error) {
-  console.log(error);
+  logError("enrollment4", error);
 }
