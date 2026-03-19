@@ -1,9 +1,6 @@
-import { Student, createStudent } from "./src/domain/entities/studentEntity";
-import {
-  Enrollment,
-  createEnrollment,
-} from "./src/domain/entities/enrollmentEntity";
-import { Course, createCourse } from "./src/domain/entities/studentEntity";
+import { createStudent } from "./src/domain/entities/studentEntity";
+import { createEnrollment } from "./src/domain/entities/enrollmentEntity";
+import { createCourse } from "./src/domain/entities/courseEntity";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -56,11 +53,34 @@ try {
 }
 
 // Course Tests
+try {
+  const course0 = createCourse("CS101", "Intro to Computer Science", 5, 150);
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  const course0 = createCourse("Z9", "Intro to Computer Science", 5, 150);
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  const course0 = createCourse("CS101", "Intro to Computer Science", 20, 150);
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  const course0 = createCourse("CS101", "Intro to Computer Science", 5, 500);
+} catch (error) {
+  console.log(error);
+}
 
 // Enrollment Tests
 try {
   const enrollment0 = createEnrollment(
-    "ENR000000",
+    "ENR-000000",
     "STU930842",
     "CS101",
     "Fall 2026",
@@ -71,7 +91,7 @@ try {
 
 try {
   const enrollment1 = createEnrollment(
-    "ERN000000",
+    "ERN-000000",
     "STU930842",
     "CS101",
     "Fall 2026",
@@ -82,7 +102,7 @@ try {
 
 try {
   const enrollment2 = createEnrollment(
-    "ENR000000",
+    "ENR-000000",
     "STU9",
     "CS101",
     "Fall 2026",
@@ -93,7 +113,7 @@ try {
 
 try {
   const enrollment3 = createEnrollment(
-    "ENR000000",
+    "ENR-000000",
     "STU930842",
     "F3",
     "Fall 2026",
@@ -104,7 +124,7 @@ try {
 
 try {
   const enrollment4 = createEnrollment(
-    "ENR000000",
+    "ENR-000000",
     "STU930842",
     "CS101",
     "Splinter 6",
