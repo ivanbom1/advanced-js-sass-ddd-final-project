@@ -8,9 +8,9 @@ export type Course = {
 };
 
 export function createCourse(
-    code: CourseCode,
+    code: string,
     name: string,
-    credits: Credits,
+    credits: number,
     capacity: number,
 ): Course {
     const validCourseCode = createCourseCode(code);

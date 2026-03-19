@@ -8,9 +8,9 @@ export type Student = {
 };
 
 export function createStudent(
-    id: StudentId,
+    id: string,
     name: string,
-    email: Email,
+    email: string,
     enrolledCredits?: number,
 ): Student {
     const validId = createStudentId(id);
