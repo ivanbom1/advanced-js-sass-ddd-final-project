@@ -22,5 +22,5 @@ export function createStudent(
     if (enrolledCredits && enrolledCredits > 18) {
         throw new Error("Max 18 credits per semester");
     }
-    return {id: validId, name, email: validEmail, enrolledCredits};
+    return {id: validId, name, email: validEmail, enrolledCredits: 0};
 }

@@ -1,4 +1,4 @@
-import { StudentId, CourseCode, Semester, EnrollmentId, createEnrollmentId, createStudentId, createCourseCode, createSemester } from "./types";
+    import { StudentId, CourseCode, Semester, EnrollmentId, createEnrollmentId, createStudentId, createCourseCode, createSemester } from "./types";
 export type Enrollment = {
     id: EnrollmentId;
     studentId: StudentId;
@@ -17,7 +17,7 @@ export function createEnrollment(
     const validStudentId = createStudentId(studentId);
     const validCourseCode = createCourseCode(courseCode);
     const validSemester = createSemester(semester);
-    
+
     return { id: validEnrollmentId, 
              studentId: validStudentId, 
              courseCode: validCourseCode, 
