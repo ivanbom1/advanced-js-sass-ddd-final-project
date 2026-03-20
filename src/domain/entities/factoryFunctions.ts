@@ -7,7 +7,7 @@ import { createStudentId, createCourseCode, createCredits } from "./types";
 export function enrollStudentInCourse(student: Student, course: Course, semester: string): Enrollment {
 
     if (course.enrolledCount >= course.capacity) {
-        throw new Error("Course is full");
+        throw new Error(`Course is full: ${course.enrolledCount}/${course.capacity} students enrolled`);
     }
 
     const newCredits = student.enrolledCredits + course.credits;
