@@ -1,6 +1,8 @@
 import { createStudent } from "./src/domain/entities/studentEntity";
 import { createEnrollment } from "./src/domain/entities/enrollmentEntity";
 import { createCourse } from "./src/domain/entities/courseEntity";
+import { setupCliLogger } from "./src/domain/observer/logger";
+import { enrollStudentInCourse, cancelEnrollment } from "./src/domain/entities/factoryFunctions";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -141,98 +143,152 @@ try {
   logError("enrollment4", error);
 }
 
-
-import { enrollStudentInCourse } from "./src/domain/entities/factoryFunctions";
-
 console.log("=== TEST 1: Valid Enrollment ===");
 try {
-    const student = createStudent("STU123456", "Carla", "carla@gmail.com", 0);
-    const course1 = createCourse("CS101", "Intro to CS", 3, 50);
-    const course2 = createCourse("MATH101", "Calculus", 4, 50);
+  const student = createStudent("STU123456", "Carla", "carla@gmail.com", 0);
+  const course1 = createCourse("CS101", "Intro to CS", 3, 50);
+  const course2 = createCourse("MATH101", "Calculus", 4, 50);
 
-    enrollStudentInCourse(student, course1, "Fall2024");
-    console.log(`✓ Enrolled in ${course1.code}. Credits: ${student.enrolledCredits}`);
+  enrollStudentInCourse(student, course1, "Fall2024");
+  console.log(
+    `✓ Enrolled in ${course1.code}. Credits: ${student.enrolledCredits}`,
+  );
 
-    enrollStudentInCourse(student, course2, "Fall2024");
-    console.log(`✓ Enrolled in ${course2.code}. Credits: ${student.enrolledCredits}`);
+  enrollStudentInCourse(student, course2, "Fall2024");
+  console.log(
+    `✓ Enrolled in ${course2.code}. Credits: ${student.enrolledCredits}`,
+  );
 } catch (error) {
-    console.log(`✗ Error: ${error}`);
+  console.log(`✗ Error: ${error}`);
 }
 
 console.log("\n=== TEST 2: Exceed 18 Credit Limit ===");
 try {
-    const student = createStudent("STU654321", "John", "john@gmail.com", 0);
-    const course1 = createCourse("CS101", "Intro to CS", 6, 50);
-    const course2 = createCourse("MATH101", "Calculus", 6, 50);
-    const course3 = createCourse("ENG201", "Literature", 6, 50);
-    const course4 = createCourse("PHYS101", "Physics", 6, 50);
+  const student = createStudent("STU654321", "John", "john@gmail.com", 0);
+  const course1 = createCourse("CS101", "Intro to CS", 6, 50);
+  const course2 = createCourse("MATH101", "Calculus", 6, 50);
+  const course3 = createCourse("ENG201", "Literature", 6, 50);
+  const course4 = createCourse("PHYS101", "Physics", 6, 50);
 
-    enrollStudentInCourse(student, course1, "Fall2024");
-    console.log(`✓ Enrolled in ${course1.code}. Credits: ${student.enrolledCredits}`);
+  enrollStudentInCourse(student, course1, "Fall2024");
+  console.log(
+    `✓ Enrolled in ${course1.code}. Credits: ${student.enrolledCredits}`,
+  );
 
-    enrollStudentInCourse(student, course2, "Fall2024");
-    console.log(`✓ Enrolled in ${course2.code}. Credits: ${student.enrolledCredits}`);
+  enrollStudentInCourse(student, course2, "Fall2024");
+  console.log(
+    `✓ Enrolled in ${course2.code}. Credits: ${student.enrolledCredits}`,
+  );
 
-    enrollStudentInCourse(student, course3, "Fall2024");
-    console.log(`✓ Enrolled in ${course3.code}. Credits: ${student.enrolledCredits}`);
+  enrollStudentInCourse(student, course3, "Fall2024");
+  console.log(
+    `✓ Enrolled in ${course3.code}. Credits: ${student.enrolledCredits}`,
+  );
 
-    enrollStudentInCourse(student, course4, "Fall2024");
-    console.log(`✓ Enrolled in ${course4.code}. Credits: ${student.enrolledCredits}`);
+  enrollStudentInCourse(student, course4, "Fall2024");
+  console.log(
+    `✓ Enrolled in ${course4.code}. Credits: ${student.enrolledCredits}`,
+  );
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
 
 console.log("\n=== TEST 3: Course Capacity Full ===");
 try {
-    const student1 = createStudent("STU111111", "Alice", "alice@gmail.com", 0);
-    const student2 = createStudent("STU222222", "Bob", "bob@gmail.com", 0);
-    const course = createCourse("CS101", "Intro to CS", 3, 1);
+  const student1 = createStudent("STU111111", "Alice", "alice@gmail.com", 0);
+  const student2 = createStudent("STU222222", "Bob", "bob@gmail.com", 0);
+  const course = createCourse("CS101", "Intro to CS", 3, 1);
 
-    enrollStudentInCourse(student1, course, "Fall2024");
-    console.log(`✓ Student 1 enrolled. Course capacity: ${course.enrolledCount}/${course.capacity}`);
+  enrollStudentInCourse(student1, course, "Fall2024");
+  console.log(
+    `✓ Student 1 enrolled. Course capacity: ${course.enrolledCount}/${course.capacity}`,
+  );
 
-    enrollStudentInCourse(student2, course, "Fall2024");
-    console.log(`✓ Student 2 enrolled. Course capacity: ${course.enrolledCount}/${course.capacity}`);
+  enrollStudentInCourse(student2, course, "Fall2024");
+  console.log(
+    `✓ Student 2 enrolled. Course capacity: ${course.enrolledCount}/${course.capacity}`,
+  );
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
 
 console.log("\n=== TEST 4: Invalid Student ID ===");
 try {
-    const student = createStudent("INVALID", "Test", "test@gmail.com", 0);
-    console.log(`✓ Student created`);
+  const student = createStudent("INVALID", "Test", "test@gmail.com", 0);
+  console.log(`✓ Student created`);
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
 
 console.log("\n=== TEST 5: Invalid Course Code ===");
 try {
-    const course = createCourse("INVALID123", "Test", 3, 50);
-    console.log(`✓ Course created`);
+  const course = createCourse("INVALID123", "Test", 3, 50);
+  console.log(`✓ Course created`);
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
 
 console.log("\n=== TEST 6: Invalid Email ===");
 try {
-    const student = createStudent("STU333333", "Charlie", "invalid-email", 0);
-    console.log(`✓ Student created`);
+  const student = createStudent("STU333333", "Charlie", "invalid-email", 0);
+  console.log(`✓ Student created`);
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
 
 console.log("\n=== TEST 7: Invalid Credits Value ===");
 try {
-    const course = createCourse("CS101", "Intro to CS", 5, 50);
-    console.log(`✓ Course created`);
+  const course = createCourse("CS101", "Intro to CS", 5, 50);
+  console.log(`✓ Course created`);
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
 
 console.log("\n=== TEST 8: Invalid Course Capacity ===");
 try {
-    const course = createCourse("CS101", "Intro to CS", 3, 250);
-    console.log(`✓ Course created`);
+  const course = createCourse("CS101", "Intro to CS", 3, 250);
+  console.log(`✓ Course created`);
 } catch (error) {
-    console.log(`✗ Expected failure: ${error}`);
+  console.log(`✗ Expected failure: ${error}`);
 }
+
+console.log("=== University Enrollment System CLI ===\n");
+
+setupCliLogger();
+
+const course = createCourse("CS101", "Intro to Computer Science", 3, 5);
+
+const s1 = createStudent("STU000001", "Alice", "alice@epita.fr");
+const s2 = createStudent("STU000002", "Bob", "bob@epita.fr");
+const s3 = createStudent("STU000003", "Charlie", "charlie@epita.fr");
+const s4 = createStudent("STU000004", "Diana", "diana@epita.fr");
+const s5 = createStudent("STU000005", "Eve", "eve@epita.fr");
+const s6 = createStudent("STU000006", "Frank", "frank@epita.fr", 15);
+
+console.log("\n--- Scenario 1: Successful enrollment ---");
+const enrollment1 = enrollStudentInCourse(s1, course, "Fall2024");
+const enrollment2 = enrollStudentInCourse(s2, course, "Fall2024");
+const enrollment3 = enrollStudentInCourse(s3, course, "Fall2024");
+
+console.log("\n--- Scenario 2: Course reaches 80% capacity ---");
+const enrollment4 = enrollStudentInCourse(s4, course, "Fall2024");
+
+console.log("\n--- Scenario 3: Course becomes full ---");
+const enrollment5 = enrollStudentInCourse(s5, course, "Fall2024");
+
+console.log("\n--- Scenario 4: Student exceeds 18 credits ---");
+const heavyCourse = createCourse("MATH099", "Heavy Math", 6, 50);
+
+try {
+  enrollStudentInCourse(s6, heavyCourse, "Fall2024");
+} catch (error) {
+  if (error instanceof Error) {
+    console.log(`[Error Caught] ${error.message}`);
+  }
+  console.log("No events emitted for the failure");
+}
+
+console.log("\n--- Scenario 5: Cancel an enrollment ---");
+cancelEnrollment(enrollment1, s1, course);
+
+console.log("\n=== CLI Run Complete ===");

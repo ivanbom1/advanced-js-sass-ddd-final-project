@@ -1,26 +1,17 @@
-export type EventCallback = (payload?: any) => void;
+import { DomainEvent } from "../events/events";
 
-class Observer {
-  private listeners: Record<string, EventCallback[]> = {};
+export type Observer = (event: DomainEvent) => void;
 
-  subscribe(eventName: string, callback: EventCallback): void {
-    if (!this.listeners[eventName]) {
-      this.listeners[eventName] = [];
-    }
-    this.listeners[eventName].push(callback);
-  }
+let observers: Observer[] = [];
 
-  unsubscribe(eventName: string, callback: EventCallback): void {
-    if (!this.listeners[eventName]) return;
-    this.listeners[eventName] = this.listeners[eventName].filter(
-      (cb) => cb !== callback,
-    );
-  }
-
-  emit(eventName: string, payload?: any): void {
-    if (!this.listeners[eventName]) return;
-    this.listeners[eventName].forEach((callback) => callback(payload));
-  }
+export function subscribe(observer: Observer): void {
+  observers.push(observer);
 }
 
-export const eventBus = new Observer();
+export function unsubscribe(observer: Observer): void {
+  observers = observers.filter((obs) => obs !== observer);
+}
+
+export function emit(event: DomainEvent): void {
+  observers.forEach((observer) => observer(event));
+}
